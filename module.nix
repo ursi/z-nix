@@ -65,13 +65,7 @@ with builtins;
       // make-str-options str-options;
 
     config =
-      let
-        cfg = config.programs.z;
-        z-var = str: "_Z_${l.toUpper (replaceStrings [ "-" ] [ "_" ] str)}";
-        z-var-no = str: z-var "no-${str}";
-        foldOnto = f: xs: init: foldl' f init xs;
-        max-score = cfg.max-score;
-      in
+      let cfg = config.programs.z; in
       { environment =
           { interactiveShellInit =
               l.optionalString (cfg.exclude-dirs != [])
@@ -86,6 +80,11 @@ with builtins;
             systemPackages = l.optional cfg.enable p.z;
 
             variables =
+              let
+                z-var = str: "_Z_${l.toUpper (replaceStrings [ "-" ] [ "_" ] str)}";
+                z-var-no = str: z-var "no-${str}";
+                foldOnto = f: xs: init: foldl' f init xs;
+              in
               l.pipe
                 (l.optionalAttrs (cfg.max-score != null)
                    { ${z-var "max-score"} = toString cfg.max-score; }
