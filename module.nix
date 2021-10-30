@@ -30,7 +30,11 @@ with builtins;
           ''
           Automatically have z handle the PROMPT_COMMAND/precmd.
 
-          Note: if you set your PROMPT_COMMAND after z does, it will override the changes z makes, and z will not work. You can use ''${PROMPT_COMMAND:+$PROMPT_COMMAND} in your PROMPT_COMMAND to fix this.
+          Note: if you override your PROMPT_COMMAND after z does, it will override the changes z makes, and z will not work. You can do something like
+
+          export PROMPT_COMMAND="my-prompt-command $PROMPT_COMMAND"
+
+          to fix this.
           '';
       };
 
