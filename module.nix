@@ -65,7 +65,10 @@ with builtins;
       // make-str-options str-options;
 
     config =
-      let cfg = config.programs.z; in
+      let
+        cfg = config.programs.z;
+        z = p.callPackage ./. {};
+      in
       { environment =
           { interactiveShellInit =
               l.optionalString (cfg.exclude-dirs != [])
@@ -75,9 +78,9 @@ with builtins;
                   (map (v: ''"${v}"'') cfg.exclude-dirs)
                 })
                 ''
-              + l.optionalString cfg.enable ". ${p.z}/z.sh";
+              + l.optionalString cfg.enable ". ${z}/z.sh";
 
-            systemPackages = l.optional cfg.enable p.z;
+            systemPackages = l.optional cfg.enable z;
 
             variables =
               let
