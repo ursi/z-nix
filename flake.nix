@@ -5,7 +5,8 @@
 
   outputs = { utils, ... }@inputs:
     utils.default-systems
-      ({ pkgs, ... }: { defaultPackage = pkgs.callPackage ./. {}; }) inputs
+      ({ pkgs, ... }: { defaultPackage = pkgs.callPackage ./. {}; })
+      inputs
     // { nixosModule = ./module.nix;
          overlay = (final: prev: { z = final.callPackage ./. {}; });
        };
